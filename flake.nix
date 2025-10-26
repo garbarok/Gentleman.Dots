@@ -63,7 +63,7 @@
             ./zed.nix  # Zed configuration
             ./television.nix  # Television configuration
             ./wezterm.nix  # WezTerm configuration
-            # ./zellij.nix  # Zellij configuration (commented out)
+            ./zellij.nix  # Zellij configuration (commented out)
             ./tmux.nix  # Tmux configuration
             ./fish.nix  # Fish shell configuration
             ./starship.nix  # Starship prompt configuration
