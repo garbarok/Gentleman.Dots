@@ -124,11 +124,11 @@
       # Home Manager configurations for each system
       homeConfigurations = {
         # macOS system configurations
-        "gentleman-macos-intel" = mkHomeConfiguration "x86_64-darwin";
-        "gentleman-macos-arm" = mkHomeConfiguration "aarch64-darwin";
-        
-        # Default to Apple Silicon
-        "gentleman" = mkHomeConfiguration "aarch64-darwin";
+        "x86_64-darwin" = mkHomeConfiguration "x86_64-darwin";
+        "aarch64-darwin" = mkHomeConfiguration "aarch64-darwin";
+
+        # Default alias
+        "darwin" = mkHomeConfiguration "aarch64-darwin";
       };
     };
 }
