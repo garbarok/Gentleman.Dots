@@ -63,7 +63,10 @@ bind C-a send-prefix
 unbind %
 unbind '"'
 bind v split-window -h -c "#{pane_current_path}"
-bind d split-window -v -c "#{pane_current_path}"
+bind s split-window -v -c "#{pane_current_path}"
+
+# Restaurar 'd' para detach (comportamiento estándar tmux)
+bind d detach-client
 
 # Mouse support
 set -g mouse on
