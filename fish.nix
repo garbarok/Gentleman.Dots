@@ -23,7 +23,14 @@
           set BREW_BIN /home/linuxbrew/.linuxbrew/bin/brew
       end
 
-      set -x PATH $HOME/.local/bin $HOME/.local/state/nix/profiles/home-manager/home-path/bin $HOME/.opencode/bin $HOME/.volta/bin $HOME/.bun/bin $HOME/.nix-profile/bin /nix/var/nix/profiles/default/bin /usr/local/bin $HOME/.config $HOME/.cargo/bin /usr/local/lib/* $PATH
+      fish_add_path $HOME/.local/bin
+      fish_add_path $HOME/.local/state/nix/profiles/home-manager/home-path/bin
+      fish_add_path $HOME/.opencode/bin
+      fish_add_path $HOME/.volta/bin
+      fish_add_path $HOME/.bun/bin
+      fish_add_path $HOME/.nix-profile/bin
+      fish_add_path /nix/var/nix/profiles/default/bin
+      fish_add_path /usr/local/bin
 
       eval ($BREW_BIN shellenv)
 

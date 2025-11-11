@@ -334,7 +334,7 @@
   };
 
   programs.zsh = {
-    enable = true;
+    enable = false;  # Disabled - using fish as primary shell
     shellAliases = {
       "o" = "oil";
       "oo" = "oil .";

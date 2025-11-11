@@ -48,14 +48,14 @@
             ./fish.nix  # Fish shell configuration
             ./starship.nix  # Starship prompt configuration
             ./nvim.nix  # Neovim configuration
-            ./zsh.nix  # Zsh configuration
+            # ./zsh.nix  # Zsh configuration (disabled - using fish)
             ./oil-scripts.nix  # Oil.nvim scripts configuration
             ./opencode.nix  # OpenCode AI assistant configuration
             ./claude.nix  # Claude Code CLI configuration
             {
               # Personal data
-              home.username = "YourUser";  # Replace with your username
-              home.homeDirectory = "/Users/YourUser/";  # macOS home directory
+              home.username = "ogs";  # Replace with your username
+              home.homeDirectory = "/Users/ogs/";  # macOS home directory
               home.stateVersion = "24.11";  # State version
 
               # Base packages that should be available everywhere
@@ -64,7 +64,7 @@
                 # zellij
                 tmux
                 fish
-                zsh
+                # zsh  # Disabled - using fish as primary shell
                 nushell
 
                 # ─── Development tools ───
@@ -84,6 +84,8 @@
                 unstablePkgs.nixd
                 unstablePkgs.neovim
                 tree-sitter
+                presenterm
+
 
                 # ─── Compilers and system utilities ───
                 gcc
@@ -106,7 +108,7 @@
               programs.fish.enable = true;
               programs.nushell.enable = true;
               programs.starship.enable = false;
-              programs.zsh.enable = true;
+              programs.zsh.enable = false;  # Disabled - using fish as primary shell
               programs.git.enable = true;
               programs.gh.enable = true;  # GitHub CLI
               programs.home-manager.enable = true;
