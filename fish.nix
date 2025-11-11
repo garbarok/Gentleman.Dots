@@ -70,6 +70,19 @@
       alias fzfnvim='nvim (fzf --preview="bat --theme=gruvbox-dark --color=always {}")'
       alias opencode-config='nvim ~/.opencode.json'
 
+      # Frontend/Angular aliases
+      alias nxg='nx generate'  # Generate Angular components/services
+      alias nxb='nx build'  # Build projects
+      alias nxt='nx test'  # Run tests
+      alias nxs='nx serve'  # Serve application
+      alias nxr='nx run'  # Run custom target
+      alias nxgraph='nx graph'  # Show dependency graph
+      alias nxaffected='nx affected'  # Show affected projects
+      alias pn='pnpm'  # Shorthand for pnpm
+      alias pni='pnpm install'
+      alias pnr='pnpm run'
+      alias pnd='pnpm dev'
+
       # Nix management aliases
       alias nixup='cd ~/Projects/Gentleman.Dots && nix flake update && home-manager switch --flake .#darwin; cd -'
       alias nixswitch='cd ~/Projects/Gentleman.Dots && home-manager switch --flake .#darwin; cd -'

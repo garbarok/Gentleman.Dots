@@ -68,6 +68,9 @@
                 # zsh  # Disabled - using fish as primary shell
                 nushell
 
+                # ─── Editors and IDEs ───
+                vscode  # VSCode editor
+
                 # ─── Development tools ───
                 volta
                 carapace
@@ -78,11 +81,15 @@
                 starship
                 fzf
                 nodejs
+                nodePackages.pnpm  # Fast package manager
+                nodePackages."@angular/cli"  # Angular CLI
                 bun
                 cargo
                 cargo-update  # Tool to update cargo packages
                 go
                 nil
+                uv  # Modern Python package manager
+                python3
                 # mise - configured in mise.nix
                 unstablePkgs.nixd
                 unstablePkgs.neovim
@@ -99,6 +106,8 @@
                 unzip
                 bat
                 lazygit
+                git-filter-repo  # Git tool for monorepo management
+                gh  # GitHub CLI
                 yazi
                 television
 
