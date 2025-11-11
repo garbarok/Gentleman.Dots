@@ -40,6 +40,6 @@
 
   # Fish aliases (cc -> assumed 'claude-code' binary). Best-effort; existence is ensured only after activation.
   programs.fish.shellAliases = {
-    cc = "claude-code";  # Adjust if the final executable name differs
+    cc = "claude";  # Adjust if the final executable name differs
   };
 }

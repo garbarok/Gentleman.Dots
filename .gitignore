@@ -24,3 +24,9 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Secrets management
+.config/sops/age/keys.txt
+secrets/*.key
+secrets/*.txt
+secrets/decrypted/

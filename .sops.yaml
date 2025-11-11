@@ -1,0 +1,11 @@
+# sops configuration file
+# Documentation: https://github.com/getsops/sops
+
+keys:
+  - &admin age1k7eu04pef5m6s54d320uewzjjp39u3ut7qj9yu4x88ejqrdwgcdqexzv4s
+
+creation_rules:
+  - path_regex: secrets/secrets\.yaml$
+    key_groups:
+      - age:
+          - *admin

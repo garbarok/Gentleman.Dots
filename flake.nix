@@ -9,9 +9,15 @@
       inputs.nixpkgs.follows = "nixpkgs";  # Follow nixpkgs input
     };
     flake-utils.url = "github:numtide/flake-utils";  # Flake utilities
+
+    # Secrets management with sops-nix
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, home-manager, flake-utils, ... }:
+  outputs = { nixpkgs, nixpkgs-unstable, home-manager, flake-utils, sops-nix, ... }:
     let
       # Support macOS systems only
       supportedSystems = [ "x86_64-darwin" "aarch64-darwin" ];
@@ -32,12 +38,19 @@
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           
-          # Pass extraSpecialArgs to make unstablePkgs available in modules
+          # Pass extraSpecialArgs to make unstablePkgs and other inputs available in modules
           extraSpecialArgs = {
             inherit unstablePkgs;
+            inherit (sops-nix) homeManagerModules;
           };
           
           modules = [
+            # Secrets management (must be first for other modules to use)
+            sops-nix.homeManagerModules.sops
+            ./secrets.nix  # Secrets configuration with sops-nix
+            ./ssh.nix  # SSH configuration with encrypted keys
+
+            # Terminal and shell
             ./nushell.nix  # Nushell configuration
             ./ghostty.nix  # Ghostty configuration
             ./zed.nix  # Zed configuration
@@ -47,10 +60,15 @@
             ./tmux.nix  # Tmux configuration
             ./fish.nix  # Fish shell configuration
             ./starship.nix  # Starship prompt configuration
+
+            # Editors and development
             ./nvim.nix  # Neovim configuration
+            ./lsp.nix  # Language Server Protocol configuration
             # ./zsh.nix  # Zsh configuration (disabled - using fish)
             ./mise.nix  # Mise version manager configuration
             ./oil-scripts.nix  # Oil.nvim scripts configuration
+
+            # AI assistants
             ./opencode.nix  # OpenCode AI assistant configuration
             ./claude.nix  # Claude Code CLI configuration
             {
@@ -143,5 +161,258 @@
         # Default alias
         "darwin" = mkHomeConfiguration "aarch64-darwin";
       };
+
+      # Development shells for project-specific environments
+      # Usage: nix develop .#<shell-name>
+      devShells = builtins.listToAttrs (map (system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+        in
+        {
+          name = system;
+          value = {
+            # Default development shell with all tools
+            default = pkgs.mkShell {
+              name = "gentleman-dev";
+              buildInputs = with pkgs; [
+                # Essential development tools
+                nodejs
+                nodePackages.pnpm
+                nodePackages.typescript
+                nodePackages.typescript-language-server
+                nodePackages.eslint_d
+                nodePackages.prettier
+                git
+                gh
+                lazygit
+
+                # Shell and utilities
+                fish
+                starship
+                fzf
+                ripgrep
+                fd
+                bat
+                jq
+
+                # Nix tools
+                nil
+                nixpkgs-fmt
+              ];
+
+              shellHook = ''
+                echo "🎩 Gentleman.Dots development environment"
+                echo "Available tools: node, pnpm, typescript, eslint, prettier"
+                echo ""
+                exec fish
+              '';
+            };
+
+            # Nx monorepo development shell
+            nx-monorepo = pkgs.mkShell {
+              name = "nx-workspace";
+              buildInputs = with pkgs; [
+                # Node.js ecosystem
+                nodejs
+                nodePackages.pnpm
+                nodePackages.npm-check-updates
+                bun
+
+                # Nx and Angular CLI (from global packages)
+                nodePackages.typescript
+                nodePackages.eslint_d
+                nodePackages.prettier
+
+                # Language servers for better IDE integration
+                nodePackages.typescript-language-server
+                nodePackages.vscode-langservers-extracted
+                nodePackages.yaml-language-server
+
+                # Git tools for monorepo management
+                git
+                git-filter-repo
+                gh
+                lazygit
+
+                # Utilities
+                jq
+                ripgrep
+                fd
+                bat
+              ];
+
+              shellHook = ''
+                echo "🎯 Nx Monorepo Development Environment"
+                echo ""
+                echo "Quick commands:"
+                echo "  pnpm install          - Install dependencies"
+                echo "  pnpm nx graph         - View dependency graph"
+                echo "  pnpm nx affected      - Check affected projects"
+                echo "  pnpm nx build <app>   - Build a project"
+                echo "  pnpm nx test <app>    - Test a project"
+                echo ""
+                echo "Installed versions:"
+                echo "  Node: $(node --version)"
+                echo "  pnpm: $(pnpm --version)"
+                echo "  TypeScript: $(tsc --version)"
+                echo ""
+
+                # Set up Nx environment variables
+                export NX_DAEMON=true
+                export NX_CACHE_DIRECTORY="$HOME/.cache/nx"
+
+                # Source secrets if available
+                if [ -f "$HOME/.config/secrets/env" ]; then
+                  source "$HOME/.config/secrets/env"
+                fi
+
+                exec fish
+              '';
+            };
+
+            # TypeScript library development
+            ts-lib = pkgs.mkShell {
+              name = "typescript-library";
+              buildInputs = with pkgs; [
+                nodejs
+                nodePackages.pnpm
+                nodePackages.typescript
+                nodePackages.typescript-language-server
+                nodePackages.eslint_d
+                nodePackages.prettier
+                nodePackages.npm-check-updates
+
+                # Testing tools
+                git
+                gh
+              ];
+
+              shellHook = ''
+                echo "📚 TypeScript Library Development"
+                echo ""
+                echo "Setup commands:"
+                echo "  pnpm init             - Initialize package.json"
+                echo "  pnpm add -D typescript @types/node"
+                echo "  pnpm tsc --init       - Create tsconfig.json"
+                echo ""
+                exec fish
+              '';
+            };
+
+            # Node.js API development
+            node-api = pkgs.mkShell {
+              name = "nodejs-api";
+              buildInputs = with pkgs; [
+                nodejs
+                nodePackages.pnpm
+                nodePackages.typescript
+                nodePackages.typescript-language-server
+                nodePackages.eslint_d
+                nodePackages.prettier
+
+                # Database tools
+                postgresql
+                redis
+
+                # API testing
+                curl
+                jq
+
+                git
+                gh
+              ];
+
+              shellHook = ''
+                echo "🚀 Node.js API Development"
+                echo ""
+                echo "Common frameworks:"
+                echo "  pnpm add express fastify nestjs"
+                echo "  pnpm add -D @types/node @types/express"
+                echo ""
+                echo "Database access:"
+                echo "  PostgreSQL: localhost:5432"
+                echo "  Redis: localhost:6379"
+                echo ""
+                exec fish
+              '';
+            };
+
+            # Frontend development (Angular/React/Vue)
+            frontend = pkgs.mkShell {
+              name = "frontend-dev";
+              buildInputs = with pkgs; [
+                nodejs
+                nodePackages.pnpm
+                nodePackages."@angular/cli"
+                bun
+
+                # Language servers
+                nodePackages.typescript-language-server
+                nodePackages.vscode-langservers-extracted
+
+                # Tools
+                nodePackages.prettier
+                nodePackages.eslint_d
+
+                git
+                gh
+              ];
+
+              shellHook = ''
+                echo "🎨 Frontend Development Environment"
+                echo ""
+                echo "Available CLIs:"
+                echo "  ng new <app>          - Create Angular app"
+                echo "  pnpm create vite      - Create Vite app (React/Vue/Svelte)"
+                echo "  pnpm create next-app  - Create Next.js app"
+                echo ""
+                exec fish
+              '';
+            };
+
+            # DevOps and infrastructure
+            devops = pkgs.mkShell {
+              name = "devops";
+              buildInputs = with pkgs; [
+                # Container tools
+                docker
+                docker-compose
+
+                # CI/CD
+                gh
+                git
+
+                # Infrastructure as Code
+                terraform
+                ansible
+
+                # Cloud CLIs (if needed)
+                # awscli2
+                # google-cloud-sdk
+                # azure-cli
+
+                # Utilities
+                jq
+                yq
+                kubectl
+              ];
+
+              shellHook = ''
+                echo "⚙️  DevOps Environment"
+                echo ""
+                echo "Available tools:"
+                echo "  docker, docker-compose"
+                echo "  terraform, ansible"
+                echo "  kubectl, gh"
+                echo ""
+                exec fish
+              '';
+            };
+          };
+        }
+      ) supportedSystems);
     };
 }
