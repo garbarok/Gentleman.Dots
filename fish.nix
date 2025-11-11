@@ -79,16 +79,19 @@
       alias cargoup='cargo install-update -a'  # Update cargo packages
       alias voltaup='volta install node@latest && volta install npm@latest'
 
-      # Master update command (like brewup)
-      alias allup='begin
+      # Master update function (like brewup)
+      function allup
         echo "🔄 Updating Homebrew..."
         brew update && brew upgrade && brew cleanup && brew autoremove && brew doctor
-        echo "\n🔄 Updating Nix packages..."
+        echo ""
+        echo "🔄 Updating Nix packages..."
         cd ~/Projects/Gentleman.Dots && nix flake update && home-manager switch --flake .#darwin; cd -
-        echo "\n🔄 Updating Mise tools..."
+        echo ""
+        echo "🔄 Updating Mise tools..."
         mise self-update && mise upgrade
-        echo "\n✅ All updates complete!"
-      end'
+        echo ""
+        echo "✅ All updates complete!"
+      end
 
       ##  yazi
 
