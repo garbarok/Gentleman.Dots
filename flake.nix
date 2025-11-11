@@ -91,6 +91,7 @@
 
                 # ─── Compilers and system utilities ───
                 gcc
+                libiconv  # Required for cargo-update and other Rust packages
                 fd
                 ripgrep
                 coreutils

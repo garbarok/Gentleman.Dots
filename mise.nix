@@ -60,9 +60,6 @@
 
     [tasks.info]
     description = "Print project information"
-    run = '''
-      echo "Project: $PROJECT_NAME"
-      echo "NODE_ENV: $NODE_ENV"
-    '''
+    run = "echo Project: $PROJECT_NAME && echo NODE_ENV: $NODE_ENV"
   '';
 }
