@@ -49,6 +49,7 @@
             ./starship.nix  # Starship prompt configuration
             ./nvim.nix  # Neovim configuration
             # ./zsh.nix  # Zsh configuration (disabled - using fish)
+            ./mise.nix  # Mise version manager configuration
             ./oil-scripts.nix  # Oil.nvim scripts configuration
             ./opencode.nix  # OpenCode AI assistant configuration
             ./claude.nix  # Claude Code CLI configuration
@@ -81,6 +82,7 @@
                 cargo
                 go
                 nil
+                # mise - configured in mise.nix
                 unstablePkgs.nixd
                 unstablePkgs.neovim
                 tree-sitter
@@ -104,10 +106,10 @@
 
               # Enable programs explicitly (critical for binaries to appear)
               # All program enables are centralized here
-              programs.neovim.enable = false;
+              programs.neovim.enable = false;  # Using unstablePkgs.neovim instead
               programs.fish.enable = true;
               programs.nushell.enable = true;
-              programs.starship.enable = false;
+              programs.starship.enable = true;
               programs.zsh.enable = false;  # Disabled - using fish as primary shell
               programs.git.enable = true;
               programs.gh.enable = true;  # GitHub CLI
