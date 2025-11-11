@@ -80,6 +80,7 @@
                 nodejs
                 bun
                 cargo
+                cargo-update  # Tool to update cargo packages
                 go
                 nil
                 # mise - configured in mise.nix

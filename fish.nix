@@ -76,6 +76,7 @@
 
       # Update all tools
       alias miseup='mise self-update && mise upgrade'
+      alias cargoup='cargo install-update -a'  # Update cargo packages
       alias voltaup='volta install node@latest && volta install npm@latest'
 
       # Master update command (like brewup)
