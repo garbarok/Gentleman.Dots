@@ -75,7 +75,7 @@
       alias nixswitch='cd ~/Projects/Gentleman.Dots && home-manager switch --flake .#darwin; cd -'
 
       # Update all tools
-      alias miseup='mise self-update && mise upgrade'
+      alias miseup='mise upgrade'  # Update mise-managed tools (mise itself updates via Nix)
       alias cargoup='cargo install-update -a'  # Update cargo packages
       alias voltaup='volta install node@latest && volta install npm@latest'
 
@@ -84,11 +84,11 @@
         echo "🔄 Updating Homebrew..."
         brew update && brew upgrade && brew cleanup && brew autoremove && brew doctor
         echo ""
-        echo "🔄 Updating Nix packages..."
+        echo "🔄 Updating Nix packages (including mise)..."
         cd ~/Projects/Gentleman.Dots && nix flake update && home-manager switch --flake .#darwin; cd -
         echo ""
-        echo "🔄 Updating Mise tools..."
-        mise self-update && mise upgrade
+        echo "🔄 Updating Mise-managed tools..."
+        mise upgrade
         echo ""
         echo "✅ All updates complete!"
       end
