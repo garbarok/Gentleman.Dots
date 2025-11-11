@@ -70,6 +70,26 @@
       alias fzfnvim='nvim (fzf --preview="bat --theme=gruvbox-dark --color=always {}")'
       alias opencode-config='nvim ~/.opencode.json'
 
+      # Nix management aliases
+      alias nixup='cd ~/Projects/Gentleman.Dots && nix flake update && home-manager switch --flake .#darwin; cd -'
+      alias nixswitch='cd ~/Projects/Gentleman.Dots && home-manager switch --flake .#darwin; cd -'
+
+      # Update all tools
+      alias miseup='mise self-update && mise upgrade'
+      alias cargoup='cargo install-update -a'  # Requires cargo-update: cargo install cargo-update
+      alias voltaup='volta install node@latest && volta install npm@latest'
+
+      # Master update command (like brewup)
+      alias allup='begin
+        echo "🔄 Updating Homebrew..."
+        brew update && brew upgrade && brew cleanup && brew autoremove && brew doctor
+        echo "\n🔄 Updating Nix packages..."
+        cd ~/Projects/Gentleman.Dots && nix flake update && home-manager switch --flake .#darwin; cd -
+        echo "\n🔄 Updating Mise tools..."
+        mise self-update && mise upgrade
+        echo "\n✅ All updates complete!"
+      end'
+
       ##  yazi
 
       function ya_zed
