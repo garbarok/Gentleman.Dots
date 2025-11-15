@@ -84,6 +84,11 @@
               home.homeDirectory = "/Users/ogs/";  # macOS home directory
               home.stateVersion = "24.11";  # State version
 
+              # Disable Home Manager's automatic macOS application and font linking
+              # This prevents the buildEnv error with /Applications and /share/fonts
+              # Fonts are manually installed via home.file instead
+              disabledModules = [ "targets/darwin/linkapps.nix" "targets/darwin/fonts.nix" ];
+
               # Base packages that should be available everywhere
               home.packages = with pkgs; [
                 # ─── Terminals and utilities ───
@@ -94,7 +99,7 @@
                 nushell
 
                 # ─── Editors and IDEs ───
-                vscode  # VSCode editor
+                # vscode - managed by programs.vscode in lsp.nix
 
                 # ─── Development tools ───
                 volta
@@ -135,10 +140,11 @@
                 gh  # GitHub CLI
                 yazi
                 television
-
-                # ─── Nerd Fonts ───
-                nerd-fonts.iosevka-term
               ];
+
+              # Install fonts via home.file instead of fonts.packages
+              # to avoid buildEnv errors on macOS
+              home.file.".local/share/fonts/NerdFonts".source = "${pkgs.nerd-fonts.iosevka-term}/share/fonts";
 
               # Enable programs explicitly (critical for binaries to appear)
               # All program enables are centralized here

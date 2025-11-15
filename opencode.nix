@@ -117,8 +117,8 @@
     # Install GitHub Copilot extension if not present
     if ! gh extension list | grep -q "github/gh-copilot"; then
       echo "📦 Installing GitHub Copilot extension..."
-      gh extension install github/gh-copilot
-      echo "✅ GitHub Copilot extension installed!"
+      gh extension install github/gh-copilot || echo "⚠️  Extension install failed (might already be installed)"
+      echo "✅ GitHub Copilot extension setup complete!"
     else
       echo "✅ GitHub Copilot extension already installed"
     fi

@@ -52,26 +52,6 @@
     '';
   };
 
-  # VS Code extensions for TypeScript/JavaScript development
-  # (If you decide to use VS Code alongside Neovim/Zed)
-  programs.vscode = {
-    profiles.default.extensions = with pkgs.vscode-extensions; [
-      # TypeScript/JavaScript
-      dbaeumer.vscode-eslint
-      esbenp.prettier-vscode
-
-      # Angular (for Nx Angular projects)
-      angular.ng-template
-
-      # Useful utilities
-      eamodio.gitlens
-      usernamehw.errorlens
-
-      # Nix support
-      jnoortheen.nix-ide
-    ];
-  };
-
   # Zed editor LSP configuration
   # Your zed.nix already has good settings, but we ensure LSPs are available
   home.file.".config/zed/settings.json".text = builtins.toJSON {
