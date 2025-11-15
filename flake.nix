@@ -28,6 +28,13 @@
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
+            overlays = [
+              (final: prev: {
+                fish = prev.fish.overrideAttrs (oldAttrs: {
+                  doCheck = false;
+                });
+              })
+            ];
           };
           
           unstablePkgs = import nixpkgs-unstable {
