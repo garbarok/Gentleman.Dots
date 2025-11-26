@@ -160,6 +160,27 @@
 
               # Allow unfree packages
               nixpkgs.config.allowUnfree = true;
+
+              # Manually manage .zshenv to avoid recursive source bug from programs.zsh
+              home.file.".zshenv" = {
+                force = true;
+                text = ''
+                  # Nix
+                  if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+                    . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+                  fi
+                  # End Nix
+
+                  # Home Manager
+                  if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+                    . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+                  fi
+
+                  # Add home-manager packages to PATH
+                  export PATH="$HOME/.local/state/nix/profiles/home-manager/home-path/bin:$PATH"
+                  # End Home Manager
+                '';
+              };
             }
           ];
         };
