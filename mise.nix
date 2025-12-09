@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.mise ];
+  programs.mise = {
+    enable = true;
+    enableFishIntegration = true;
+  };
 
   # Configure mise settings - restored from backup
   home.file.".config/mise/config.toml".text = ''
@@ -10,7 +13,6 @@
     _.path = ['{{config_root}}/node_modules/.bin']
     PROJECT_NAME = "{{ config_root | basename }}"
     BIN_PATH = "{{ config_root }}/node_modules/.bin"
-    NODE_ENV = "{{ env.NODE_ENV | default(value='development') }}"
 
     [tools]
     bun = "latest"
@@ -27,6 +29,7 @@
     "npm:eas-cli" = "latest"
     "npm:eslint" = "latest"
     "npm:nx" = "latest"
+    "npm:pnpm" = "latest"
     "npm:prettier" = "latest"
     "npm:typescript" = "latest"
     ruby = "3.4.4"

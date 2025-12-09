@@ -38,6 +38,7 @@
           tmux
       end
       starship init fish | source
+      mise activate fish | source
       zoxide init fish | source
       atuin init fish | source
       fzf --fish | source
