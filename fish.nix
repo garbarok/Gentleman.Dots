@@ -84,6 +84,15 @@
       alias pnr='pnpm run'
       alias pnd='pnpm dev'
 
+      # Nx cleanup function - kills stale node processes
+      function nxclean
+        npx nx reset
+        pkill -f "nx daemon"
+        pkill -f "node.*webpack"
+        pkill -f "node.*vite"
+        echo "Cleaned up Nx processes"
+      end
+
       # Nix management aliases
       alias nixup='cd ~/Projects/Gentleman.Dots && nix flake update && home-manager switch --flake .#darwin; cd -'
       alias nixswitch='cd ~/Projects/Gentleman.Dots && home-manager switch --flake .#darwin; cd -'
