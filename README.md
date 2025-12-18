@@ -40,7 +40,7 @@ This repository provides a complete, declarative development environment configu
 
 - **Claude Code CLI**: Integrated AI coding assistant
 - **OpenCode**: AI assistant integration
-- **Gemini CLI**: Google's AI assistant (optional - see customization)
+- **Gemini CLI**: Google's AI assistant (optional)
 - **Multiple AI providers**: Support for various AI coding assistants
 
 ### 🔧 System Utilities

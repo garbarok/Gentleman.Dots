@@ -23,6 +23,14 @@
           set BREW_BIN /home/linuxbrew/.linuxbrew/bin/brew
       end
 
+      # Only run brew shellenv if brew is actually installed
+      if test -x $BREW_BIN
+          eval ($BREW_BIN shellenv)
+      else
+          echo "⚠️  Homebrew not found. Install it with:"
+          echo "   /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+      end
+
       fish_add_path $HOME/.local/bin
       fish_add_path $HOME/.local/state/nix/profiles/home-manager/home-path/bin
       fish_add_path $HOME/.opencode/bin
@@ -32,7 +40,7 @@
       fish_add_path /nix/var/nix/profiles/default/bin
       fish_add_path /usr/local/bin
 
-      eval ($BREW_BIN shellenv)
+      set -gx GPG_TTY (tty)
 
       if not set -q TMUX; and not set -q ZED_TERMINAL
           tmux
@@ -67,6 +75,10 @@
 
       # Enable vi mode
       fish_vi_key_bindings
+
+      # Set nvim as default editor for opencode and other tools
+      set -gx EDITOR nvim
+      set -gx VISUAL nvim
 
       ## alias
 
