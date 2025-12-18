@@ -46,6 +46,11 @@ set -g @kanagawa-ignore-window-colors true
 # --- terminal & key handling ---
 set -g default-terminal "tmux-256color"
 set -ga terminal-overrides ",*:Tc"
+set -ga terminal-overrides ",xterm-ghostty:Tc"
+
+# Fix hanging commands after macOS updates
+set -sg escape-time 0
+set -g focus-events on
 
 set -s extended-keys off
 

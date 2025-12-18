@@ -49,8 +49,8 @@ local config = {}
 --indexed = {
 --	[16] = "--F5A191",
 --	[17] = "--E29ECA",
- 	},
- }
+-- 	},
+-- }
 config.color_scheme = 'Kanagawa (Gogh)'
 config.window_padding = {
 	top = 0,
@@ -67,7 +67,7 @@ config.window_background_opacity = 0.85
 config.macos_window_background_blur = 20
 config.win32_system_backdrop = "Acrylic"
 
-config.font_size = 16.0
+config.font_size = 18.0
 config.enable_scroll_bar = false
 
 return config
