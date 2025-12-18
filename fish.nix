@@ -38,13 +38,16 @@
           tmux
       end
       starship init fish | source
-      mise activate fish | source
       zoxide init fish | source
       atuin init fish | source
       fzf --fish | source
 
       set -x PATH $HOME/.cargo/bin $PATH
       set -Ux CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense'
+
+      # Nx Cache Configuration (shared across worktrees)
+      set -Ux NX_CACHE_DIRECTORY $HOME/.nxcache
+      set -Ux NX_PROJECT_GRAPH_CACHE_DIRECTORY .nxproject
 
       if not test -d ~/.config/fish/completions
           mkdir -p ~/.config/fish/completions
@@ -122,26 +125,7 @@
         nix develop ~/Projects/Gentleman.Dots#aarch64-darwin.devops
       end
 
-      # Mise task aliases (shortcuts for common tasks)
-      alias mr='mise run'  # Run mise task
-      alias mt='mise tasks'  # List available tasks
-      alias mgraph='mise run nx-graph'  # Open Nx dependency graph
-      alias maffected='mise run nx-affected'  # Show affected projects
-      alias mcache='mise run nx-cache-clean'  # Clear Nx cache
-      alias mlint='mise run lint'  # Run linter
-      alias mfmt='mise run fmt'  # Format code
-      alias mtc='mise run typecheck'  # Type check
-      alias mtest='mise run test'  # Run tests
-      alias mci='mise run ci'  # Run CI checks
-      alias mclean='mise run clean'  # Clean build artifacts
-
-      # Angular generation shortcuts (via mise)
-      alias mng-comp='mise run ng-generate-component'
-      alias mng-svc='mise run ng-generate-service'
-      alias mng-mod='mise run ng-generate-module'
-
       # Update all tools
-      alias miseup='mise upgrade'  # Update mise-managed tools (mise itself updates via Nix)
       alias cargoup='cargo install-update -a'  # Update cargo packages
       alias voltaup='volta install node@latest && volta install npm@latest'
 
@@ -150,11 +134,8 @@
         echo "🔄 Updating Homebrew..."
         brew update && brew upgrade && brew cleanup && brew autoremove && brew doctor
         echo ""
-        echo "🔄 Updating Nix packages (including mise)..."
+        echo "🔄 Updating Nix packages..."
         cd ~/Projects/Gentleman.Dots && nix flake update && home-manager switch --flake .#darwin; cd -
-        echo ""
-        echo "🔄 Updating Mise-managed tools..."
-        mise upgrade
         echo ""
         echo "✅ All updates complete!"
       end

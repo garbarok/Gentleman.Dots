@@ -72,7 +72,7 @@
             ./nvim.nix  # Neovim configuration
             ./lsp.nix  # Language Server Protocol configuration
             # ./zsh.nix  # Zsh configuration (disabled - using fish)
-            ./mise.nix  # Mise version manager configuration
+            # ./mise.nix  # Mise version manager configuration (removed)
             ./oil-scripts.nix  # Oil.nvim scripts configuration
 
             # AI assistants
@@ -120,7 +120,6 @@
                 nil
                 uv  # Modern Python package manager
                 python3
-                # mise - configured in mise.nix
                 unstablePkgs.nixd
                 unstablePkgs.neovim
                 tree-sitter

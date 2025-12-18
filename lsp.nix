@@ -16,7 +16,7 @@
 
     # Linters and formatters (standalone)
     nodePackages.eslint_d  # Fast ESLint daemon
-    nodePackages.prettier  # Code formatter (also in mise)
+    nodePackages.prettier  # Code formatter
 
     # Development tools
     nodePackages.diagnostic-languageserver  # Generic diagnostic wrapper
