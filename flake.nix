@@ -63,8 +63,8 @@
             ./zed.nix  # Zed configuration
             ./television.nix  # Television configuration
             ./wezterm.nix  # WezTerm configuration
-            ./zellij.nix  # Zellij configuration (commented out)
-            ./tmux.nix  # Tmux configuration
+            ./zellij.nix  # Zellij configuration (active)
+            # ./tmux.nix  # Tmux configuration (disabled - using Zellij)
             ./fish.nix  # Fish shell configuration
             ./starship.nix  # Starship prompt configuration
 
@@ -92,8 +92,8 @@
               # Base packages that should be available everywhere
               home.packages = with pkgs; [
                 # ─── Terminals and utilities ───
-                # zellij
-                tmux
+                zellij
+                # tmux  # Switched to Zellij
                 fish
                 # zsh  # Disabled - using fish as primary shell
                 nushell

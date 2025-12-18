@@ -42,8 +42,9 @@
 
       set -gx GPG_TTY (tty)
 
-      if not set -q TMUX; and not set -q ZED_TERMINAL
-          tmux
+      # Auto-start Zellij (instead of Tmux) if not already in a multiplexer or Zed
+      if not set -q ZELLIJ; and not set -q ZED_TERMINAL
+          zellij
       end
       starship init fish | source
       zoxide init fish | source
